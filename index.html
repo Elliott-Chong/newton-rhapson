@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Newton Rhapson Method</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="style.css" />
     <script src="./p5.min.js" defer></script>
     <script src="./sketch.js" defer></script>
@@ -21,9 +22,7 @@
           <p class="info">
             Iteration: <span class="content" id="iteration"></span>
           </p>
-          <p class="info">
-            Convergence threshold: <span class="content" id="tolerance"></span>
-          </p>
+
           <p class="info">
             Significant digits:
             <span class="content" id="SF"></span>
@@ -38,13 +37,24 @@
             <label for="">y-range:</label>
             <div id="y-range"></div>
           </div>
+
           <div class="form-control">
-            <label for="">Convergence threshold:</label>
-            <div id="tolerance-control"></div>
-          </div>
-          <div class="form-control">
-            <label for="">Significat digits:</label>
+            <label for="">Significant digits:</label>
             <div id="SF-control"></div>
+          </div>
+
+          <div class="form-control">
+            <label for="">Equation (only supports polynomials):</label>
+            <div style="display: flex" id="equation-control">
+              <button id="equation-btn" style="margin-right: 1rem">
+                update
+              </button>
+            </div>
+            <p style="max-width: 500px">
+              the input represents the coefficients of the polynomial. For
+              example, [1,0,-2] would represent the equation 1x<sup>2</sup> +
+              0x<sup>1</sup> -2x<sup>0</sup> simplified: (x<sup>2</sup>-2)
+            </p>
           </div>
         </div>
         <div id="button-div">
@@ -55,8 +65,23 @@
         </div>
       </section>
       <div class="description-div">
-        <p class="desc">Newton rhapson method</p>
+        <p class="desc">
+          The Newton-Raphson method (also known as Newton's method) is a way to
+          quickly find a good approximation for the root of a real-valued
+          function f(x) = 0f(x)=0. It uses the idea that a continuous and
+          differentiable function can be approximated by a straight line tangent
+          to it.
+          <a
+            href="https://brilliant.org/wiki/newton-raphson-method/"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Learn more here</a
+          >
+        </p>
         <br />
+        <p class="desc">
+          <img src="./newton.png" style="width: 100%" alt="newton" />
+        </p>
       </div>
     </main>
   </body>

@@ -1,8 +1,11 @@
-let equation = [1, 0, -2];
+let equation = [1, 0, -9.86960440109];
 let iteration = 0;
 let point_of_tangent = 10;
 let TOLERANCE = 0.000001;
 let SF = 5;
+let reset_btn;
+let stop = false;
+let equation_input;
 // 5x^2 + 2x^1 - 3x^0
 // x^2 - 3
 
@@ -13,7 +16,6 @@ let yRange;
 
 let xSlider;
 let ySlider;
-let tolerance_slider;
 let sf_slider;
 
 const f = (x, equation) => {
@@ -63,21 +65,45 @@ const equationOfTangent = (x, equation) => {
 };
 
 function setup() {
-  createCanvas(800, 800).parent(select("#canvas"));
+  createCanvas(Math.min(800, window.innerWidth * 0.9), 800).parent(
+    select("#canvas")
+  );
   xSlider = createSlider(1, 100, 10);
   ySlider = createSlider(1, 100, 50);
-  tolerance_slider = createSlider(0.0000000001, 0.1, 0.000001);
   sf_slider = createSlider(1, 10, 5);
+  reset_btn = createButton("Reset");
+  equation_input = createInput();
+  equation_input.elt.placeholder = "1,0,-2";
 
   xSlider.parent(select("#x-range"));
   ySlider.parent(select("#y-range"));
-  tolerance_slider.parent(select("#tolerance-control"));
   sf_slider.parent(select("#SF-control"));
+  reset_btn.parent(select("#reset-btn"));
+  equation_input.parent(select("#equation-control"));
 
-  select("#equation").html(convertToReadable(equation));
+  reset_btn.elt.onclick = reset;
+  select("#equation-btn").elt.onclick = changeEquation;
 
-  frameRate(1);
+  frameRate(60);
 }
+
+const changeEquation = () => {
+  let new_equation = equation_input.value().split(",");
+  for (let elt of new_equation) {
+    if (isNaN(elt)) {
+      console.log("invalid");
+      return;
+    }
+  }
+  equation = new_equation.map((elt) => parseFloat(elt));
+  reset();
+};
+
+const reset = () => {
+  stop = false;
+  point_of_tangent = 10;
+  iteration = 0;
+};
 
 const convertToReadable = (equation) => {
   let res = "";
@@ -86,17 +112,20 @@ const convertToReadable = (equation) => {
     //j is increasing, i is decreasing
     // if (i != 1 || i != 0) {
     let prefix = equation[j];
-    if (prefix == 1) {
+    if (prefix == 1 && j != 0) {
       prefix = "+";
     } else if (prefix == -1) {
       prefix = "-";
     } else if (prefix == 0) continue;
+    else if (prefix == 1 && j == 0) prefix = "";
     // let plus_flag = prefix > 0 && j !== 0 ? "+" : "";
-    if (prefix > 0 && j !== 0) {
+    if (prefix > 0 && j != 0) {
       plus_flag = "+";
     } else plus_flag = "";
-    if (i == 0) {
+    if (i == 1) {
       res += plus_flag + prefix + "x" + " ";
+    } else if (i == 0) {
+      res += plus_flag + prefix + " ";
     } else {
       res += plus_flag + prefix + "x" + `<sup>${i}</sup>` + " ";
     }
@@ -105,8 +134,8 @@ const convertToReadable = (equation) => {
 };
 
 function draw() {
+  select("#equation").html(convertToReadable(equation));
   SF = sf_slider.value();
-  TOLERANCE = tolerance_slider.value();
   select("#iteration").html(iteration);
   xRange = xSlider.value();
   yRange = ySlider.value();
@@ -157,10 +186,11 @@ function draw() {
   stroke(255, 0, 0);
   line(x1, y1, x2, y2);
   pop();
+  if (frameCount % 60 != 0) return;
 
   old_value = point_of_tangent;
   point_of_tangent = getNextValue(point_of_tangent, equation);
-  if (Math.abs(old_value - point_of_tangent) < TOLERANCE) noLoop();
+  if (Math.abs(old_value - point_of_tangent) < TOLERANCE) stop = true;
   push();
 
   translate(width / 2, height / 2);
@@ -180,14 +210,13 @@ function draw() {
   pop();
   translate(width / 2, height / 2);
   textAlign(CENTER);
-  text(
-    point_of_tangent.toFixed(SF).toString(),
-    map(point_of_tangent, -xRange, xRange, -width / 2, width / 2),
-    20
-  );
+  // text(
+  //   point_of_tangent.toFixed(SF).toString(),
+  //   map(point_of_tangent, -xRange, xRange, -width / 2, width / 2),
+  //   20
+  // );
   select("#value").html(point_of_tangent.toFixed(SF));
-  iteration++;
-  select("#tolerance").html(TOLERANCE);
+  if (!stop) iteration++;
   select("#SF").html(SF);
 
   // console.log(f(0, equationOfTangent(1, equation)));

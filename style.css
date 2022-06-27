@@ -74,6 +74,14 @@ button,
   font-weight: bold;
 }
 
+input[type='text'] {
+  border:2px solid var(--primary-color);
+  padding: .25rem .5rem;
+}
+input[type='text']:focus {
+  outline: none;
+}
+
 @media (max-width: 800px) {
   main#container {
     flex-direction: column;
@@ -82,7 +90,7 @@ button,
   #overarching-div {
     flex-direction: column;
   }
-  main#container {
+  main.container {
     display: grid;
     grid-template-areas:
       "canvas"
