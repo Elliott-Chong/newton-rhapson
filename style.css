@@ -1,17 +1,92 @@
-*, *::before, *::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+@import url("https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  --primary-color: #c7b446;
+  font-family: "Space Mono", monospace;
+  box-sizing: border-box;
 }
 
-
-body {
-    background-color: rgb(53, 53, 53);
+main.container {
+  display: grid;
+  grid-template-areas:
+    "canvas controls"
+    "desc desc";
+  justify-content: center;
+  padding: 2rem;
+  min-height: 100vh;
+  align-items: center;
+  gap: 2rem;
 }
 
-main.container{
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+#overarching-div {
+  display: flex;
+  gap: 2rem;
+  flex-direction: column;
+}
+
+a {
+  text-decoration: none;
+}
+
+#canvas {
+  grid-area: canvas;
+}
+
+.info {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.form-control label {
+  font-weight: 600;
+}
+
+.description-div {
+  max-width: fit-content;
+  grid-area: desc;
+}
+
+.content {
+  color: var(--primary-color);
+}
+
+#button-div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: flex-start;
+}
+
+button,
+.btn {
+  font-size: 1rem;
+  background-color: var(--primary-color);
+  color: white;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+  box-shadow: 2px 2px 5px grey;
+  border: none;
+  outline: none;
+  font-weight: bold;
+}
+
+@media (max-width: 800px) {
+  main#container {
+    flex-direction: column;
+  }
+
+  #overarching-div {
+    flex-direction: column;
+  }
+  main#container {
+    display: grid;
+    grid-template-areas:
+      "canvas"
+      "controls"
+      "desc";
+  }
 }

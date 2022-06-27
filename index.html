@@ -10,6 +10,54 @@
     <script src="./sketch.js" defer></script>
   </head>
   <body>
-    <main class="container"><div id="canvas"></div></main>
+    <main class="container">
+      <div id="canvas"></div>
+      <section id="overarching-div">
+        <div id="info-div">
+          <p class="info">
+            Equation: <span class="content" id="equation"></span>
+          </p>
+          <p class="info">Root: <span class="content" id="value"></span></p>
+          <p class="info">
+            Iteration: <span class="content" id="iteration"></span>
+          </p>
+          <p class="info">
+            Convergence threshold: <span class="content" id="tolerance"></span>
+          </p>
+          <p class="info">
+            Significant digits:
+            <span class="content" id="SF"></span>
+          </p>
+        </div>
+        <div id="control-div">
+          <div class="form-control">
+            <label>x-range:</label>
+            <div id="x-range"></div>
+          </div>
+          <div class="form-control">
+            <label for="">y-range:</label>
+            <div id="y-range"></div>
+          </div>
+          <div class="form-control">
+            <label for="">Convergence threshold:</label>
+            <div id="tolerance-control"></div>
+          </div>
+          <div class="form-control">
+            <label for="">Significat digits:</label>
+            <div id="SF-control"></div>
+          </div>
+        </div>
+        <div id="button-div">
+          <a href="https://github.com/elliott-chong/newton-rhapson" class="btn"
+            >Source code</a
+          >
+          <div id="reset-btn"></div>
+        </div>
+      </section>
+      <div class="description-div">
+        <p class="desc">Newton rhapson method</p>
+        <br />
+      </div>
+    </main>
   </body>
 </html>
