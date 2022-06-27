@@ -3,6 +3,7 @@ let iteration = 0;
 let point_of_tangent = 10;
 let TOLERANCE = 0.000001;
 let SF = 5;
+let initial_slider;
 let reset_btn;
 let stop = false;
 let equation_input;
@@ -72,11 +73,13 @@ function setup() {
   ySlider = createSlider(1, 100, 50);
   sf_slider = createSlider(1, 10, 5);
   reset_btn = createButton("Reset");
+  initial_slider = createSlider(-100, 100, 10);
   equation_input = createInput();
   equation_input.elt.placeholder = "1,0,-2";
 
   xSlider.parent(select("#x-range"));
   ySlider.parent(select("#y-range"));
+  initial_slider.parent("#initial-control");
   sf_slider.parent(select("#SF-control"));
   reset_btn.parent(select("#reset-btn"));
   equation_input.parent(select("#equation-control"));
@@ -101,7 +104,7 @@ const changeEquation = () => {
 
 const reset = () => {
   stop = false;
-  point_of_tangent = 10;
+  point_of_tangent = initial_slider.value();
   iteration = 0;
 };
 
@@ -135,6 +138,7 @@ const convertToReadable = (equation) => {
 
 function draw() {
   select("#equation").html(convertToReadable(equation));
+  select("#initial").html(initial_slider.value());
   SF = sf_slider.value();
   select("#iteration").html(iteration);
   xRange = xSlider.value();
